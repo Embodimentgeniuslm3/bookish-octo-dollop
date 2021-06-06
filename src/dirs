@@ -1,0 +1,15 @@
+DIRS=\
+     buffer \
+     interactivity \
+     dep \
+     host \
+     propsheet \
+     propslib \
+     renderer \
+     server \
+     terminal \
+     testlist \
+     til \
+     tools \
+     tsf \
+     types \
