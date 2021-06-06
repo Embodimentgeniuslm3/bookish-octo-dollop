@@ -1,0 +1,96 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
+the MIT License. See LICENSE in the project root for license information. -->
+<Page
+    x:Class="Microsoft.Terminal.Settings.Editor.ColorSchemes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Microsoft.Terminal.Settings.Editor"
+    xmlns:model="using:Microsoft.Terminal.Settings.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    mc:Ignorable="d">
+
+
+    <Page.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BorderBrush" Value="{StaticResource SystemBaseLowColor}"/>
+            <Setter Property="Height" Value="37" />
+            <Setter Property="Width" Value="37" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="10,22,0,0" />
+            <Setter Property="CornerRadius" Value="2"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <local:ColorToHexConverter x:Key="ColorToHexConverter"/>
+
+        <DataTemplate x:Key="ColorTableTemplate" x:DataType="local:ColorTableEntry">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Header="{x:Bind Name, Mode=OneWay}"
+                         Text="{x:Bind Color, Converter={StaticResource ColorToHexConverter}, Mode=TwoWay}"
+                         HorizontalAlignment="Left"/>
+                <Button Background="{x:Bind ColorToBrush(Color), Mode=OneWay}">
+                    <Button.Flyout>
+                        <Flyout>
+                            <ColorPicker Tag="{x:Bind Index, Mode=OneWay}"
+                                         Color="{x:Bind Color, Mode=TwoWay}"
+                                         IsColorSliderVisible="False"
+                                         IsColorChannelTextInputVisible="False"
+                                         IsHexInputVisible="False"
+                                         IsAlphaEnabled="False"
+                                         IsAlphaSliderVisible="True"
+                                         IsAlphaTextInputVisible="True"
+                                         ColorChanged="ColorPickerChanged"/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Uid="ColorScheme_ColorSchemes"
+                   Style="{StaticResource SubheaderTextBlockStyle}"
+                   Margin="0,0,0,20"
+                   Grid.Row="0" />
+
+            <StackPanel Grid.Row="1"
+                    Grid.Column="0">
+                <ComboBox x:Name="ColorSchemeComboBox"
+                      SelectedIndex="0"
+                      ItemsSource="{x:Bind ColorSchemeList, Mode=OneWay}"
+                      SelectionChanged="ColorSchemeSelectionChanged" Width="160">
+                </ComboBox>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="2"
+                      Grid.Column="0"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="ColorTableControl"
+                          ItemsSource="{x:Bind CurrentColorTable, Mode=TwoWay}"
+                          ItemTemplate="{StaticResource ColorTableTemplate}">
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </ScrollViewer>
+</Page>
