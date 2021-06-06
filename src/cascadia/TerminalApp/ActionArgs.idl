@@ -1,0 +1,63 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace TerminalApp
+{
+    interface IActionArgs
+    {
+        Boolean Equals(IActionArgs other);
+    };
+
+    interface IActionEventArgs
+    {
+        Boolean Handled;
+        IActionArgs ActionArgs { get; };
+    };
+
+    enum Direction
+    {
+        None = 0,
+        Left,
+        Right,
+        Up,
+        Down
+    };
+
+    [default_interface] runtimeclass ActionEventArgs : IActionEventArgs
+    {
+        ActionEventArgs(IActionArgs args);
+    };
+
+    [default_interface] runtimeclass CopyTextArgs : IActionArgs
+    {
+        Boolean TrimWhitespace { get; };
+    };
+
+    [default_interface] runtimeclass NewTabArgs : IActionArgs
+    {
+        // ProfileIndex can be null (for "use the default"), so this needs to be
+        // a IReference, so it's nullable
+        Windows.Foundation.IReference<Int32> ProfileIndex { get; };
+    };
+
+    [default_interface] runtimeclass SwitchToTabArgs : IActionArgs
+    {
+        Int32 TabIndex { get; };
+    };
+
+    [default_interface] runtimeclass ResizePaneArgs : IActionArgs
+    {
+        Direction Direction { get; };
+    };
+
+    [default_interface] runtimeclass MoveFocusArgs : IActionArgs
+    {
+        Direction Direction { get; };
+    };
+
+    [default_interface] runtimeclass AdjustFontSizeArgs : IActionArgs
+    {
+        Int32 Delta { get; };
+    };
+
+}
