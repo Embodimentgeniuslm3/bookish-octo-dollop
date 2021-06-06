@@ -1,0 +1,16 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import "../ShortcutActionDispatch.idl";
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass AppKeyBindings : Microsoft.Terminal.Settings.IKeyBindings
+    {
+        AppKeyBindings();
+        void SetDispatch(ShortcutActionDispatch dispatch);
+
+        void SetKeyBinding(ShortcutAction action, Microsoft.Terminal.Settings.KeyChord chord);
+        Microsoft.Terminal.Settings.KeyChord GetKeyBinding(ShortcutAction action);
+    }
+}

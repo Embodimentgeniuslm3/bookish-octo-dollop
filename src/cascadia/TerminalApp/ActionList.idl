@@ -1,0 +1,21 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import "../Action.idl";
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass ActionList : Windows.UI.Xaml.Controls.Grid
+    {
+        ActionList();
+
+        Windows.Foundation.Collections.IObservableVector<Action> FilteredActions { get; };
+
+        void SetActions(Windows.Foundation.Collections.IVector<Action> actions);
+
+        void ToggleVisibility();
+        void SetDispatch(ShortcutActionDispatch dispatch);
+
+        event Windows.Foundation.TypedEventHandler<ActionList, Windows.UI.Xaml.RoutedEventArgs> Closed;
+    }
+}
