@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+
+namespace Microsoft.Terminal.TerminalConnection
+{
+    [default_interface]
+    runtimeclass EchoConnection : ITerminalConnection
+    {
+        EchoConnection();
+    };
+
+}

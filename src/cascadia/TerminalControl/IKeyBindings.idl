@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+
+namespace Microsoft.Terminal.TerminalControl
+{
+    // [default_interface]
+    interface IKeyBindings
+    {
+        Boolean TryKeyChord(KeyChord kc);
+    }
+}

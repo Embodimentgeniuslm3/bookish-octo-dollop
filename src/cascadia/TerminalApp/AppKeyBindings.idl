@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass AppKeyBindings : Microsoft.Terminal.TerminalControl.IKeyBindings
+    {
+        AppKeyBindings();
+
+        void SetDispatch(ShortcutActionDispatch dispatch);
+        void SetKeyMapping(Microsoft.Terminal.Settings.Model.KeyMapping keymap);
+    }
+}

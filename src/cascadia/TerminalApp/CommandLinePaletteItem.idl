@@ -1,0 +1,10 @@
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass CommandLinePaletteItem : PaletteItem
+    {
+        CommandLinePaletteItem(String commandLine);
+
+        String CommandLine { get; };
+    }
+}

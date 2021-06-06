@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass TabPaletteItem : PaletteItem
+    {
+        TabPaletteItem(TabBase tab);
+
+        TabBase Tab { get; };
+
+        TerminalTabStatus TabStatus { get; };
+    }
+}
