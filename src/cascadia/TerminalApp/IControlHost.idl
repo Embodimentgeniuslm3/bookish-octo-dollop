@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace TerminalApp
+{
+    delegate void ClosedEventArgs();
+
+    interface IControlHost
+    {
+        // Windows.UI.Xaml.Controls.Control GetControl();
+        Windows.UI.Xaml.UIElement GetRoot();
+
+        event Windows.Foundation.TypedEventHandler<IControlHost, ClosedEventArgs> CloseRequested;
+        void Close();
+
+        event Windows.Foundation.TypedEventHandler<IControlHost, Microsoft.Terminal.TerminalControl.TitleChangedEventArgs> TitleChanged;
+        String GetTitle();
+        Windows.Foundation.Size MinimumSize { get; };
+
+        // Other things we'll need:
+        Boolean IsFocused();
+        void Focus();
+    }
+}
