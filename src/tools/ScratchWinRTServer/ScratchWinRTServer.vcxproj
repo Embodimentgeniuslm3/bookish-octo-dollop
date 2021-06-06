@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{d46d9547-f085-4645-b8f7-e8cd21559ab4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ScratchWinRTServer</RootNamespace>
+    <ProjectName>ScratchWinRTServer</ProjectName>
+    <TargetName>ScratchWinRTServer</TargetName>
+    <ConfigurationType>Application</ConfigurationType>
+    <OpenConsoleUniversalApp>false</OpenConsoleUniversalApp>
+    <ApplicationType>Windows Store</ApplicationType>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+  </PropertyGroup>
+
+  <Import Project="..\..\..\common.openconsole.props" Condition="'$(OpenConsoleDir)'==''" />
+  <Import Project="$(OpenConsoleDir)src\cppwinrt.build.pre.props" />
+
+  <PropertyGroup>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+
+  <!-- Source Files -->
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ScratchClass.h" />
+    <ClInclude Include="HostClass.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="ScratchClass.cpp">
+      <DependentUpon>ScratchClass.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="HostClass.cpp">
+      <DependentUpon>HostClass.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Midl Include="IScratchInterface.idl" />
+    <Midl Include="ScratchClass.idl" />
+    <Midl Include="HostClass.idl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+<!--     <ProjectReference Include="..\ScratchWinRTServer\ScratchWinRTServer.vcxproj">
+      <Project>{d46d9547-f085-4645-b8f7-e8cd21559ab4}</Project>
+    </ProjectReference> -->
+    <ProjectReference Include="$(SolutionDir)src\types\lib\types.vcxproj" />
+
+        <ProjectReference Include="$(SolutionDir)src\buffer\out\lib\bufferout.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\renderer\base\lib\base.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\renderer\dx\lib\dx.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\renderer\uia\lib\uia.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\terminal\parser\lib\parser.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\terminal\input\lib\terminalinput.vcxproj" />
+    <!-- <ProjectReference Include="$(SolutionDir)src\cascadia\TerminalSettings\TerminalSettings.vcxproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    </ProjectReference> -->
+    <ProjectReference Include="$(SolutionDir)src\cascadia\TerminalCore\lib\TerminalCore-lib.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)src\cascadia\TerminalConnection\TerminalConnection.vcxproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!--
+    This ItemGroup and the Globals PropertyGroup below it are required in order
+    to enable F5 debugging for the unpackaged application
+    -->
+  <ItemGroup>
+    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\debugger_general.xml" />
+    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\debugger_local_windows.xml" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+
+  <Import Project="$(OpenConsoleDir)src\cppwinrt.build.post.props" />
+
+  <!-- These have to come after post.props because the Cpp common targets will inexplicably overwrite them. -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <Import Project="$(OpenConsoleDir)\build\rules\GenerateSxsManifestsFromWinmds.targets" />
+</Project>
