@@ -1,0 +1,75 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import "IMouseWheelListener.idl";
+import "IControlSettings.idl";
+import "IDirectKeyListener.idl";
+import "EventArgs.idl";
+import "ICoreState.idl";
+
+namespace Microsoft.Terminal.TerminalControl
+{
+
+    [default_interface] runtimeclass TermControl : Windows.UI.Xaml.Controls.UserControl,
+                                                      IDirectKeyListener,
+                                                      IMouseWheelListener,
+                                                      ICoreState
+    {
+        TermControl(Microsoft.Terminal.TerminalControl.IControlSettings settings, Microsoft.Terminal.TerminalConnection.ITerminalConnection connection);
+
+        static Windows.Foundation.Size GetProposedDimensions(Microsoft.Terminal.TerminalControl.IControlSettings settings, UInt32 dpi);
+
+        void UpdateSettings();
+
+        Microsoft.Terminal.TerminalControl.IControlSettings Settings { get; };
+
+        event Windows.Foundation.TypedEventHandler<Object, TitleChangedEventArgs> TitleChanged;
+        event FontSizeChangedEventArgs FontSizeChanged;
+        event Windows.Foundation.TypedEventHandler<Object, CopyToClipboardEventArgs> CopyToClipboard;
+        event Windows.Foundation.TypedEventHandler<TermControl, PasteFromClipboardEventArgs> PasteFromClipboard;
+        event Windows.Foundation.TypedEventHandler<TermControl, OpenHyperlinkEventArgs> OpenHyperlink;
+        event Windows.Foundation.TypedEventHandler<Object, Object> SetTaskbarProgress;
+        event Windows.Foundation.TypedEventHandler<TermControl, NoticeEventArgs> RaiseNotice;
+        event Windows.Foundation.TypedEventHandler<Object, Object> WarningBell;
+        event Windows.Foundation.TypedEventHandler<Object, Object> HidePointerCursor;
+        event Windows.Foundation.TypedEventHandler<Object, Object> RestorePointerCursor;
+        event Windows.Foundation.TypedEventHandler<Object, Object> TabColorChanged;
+        event Windows.Foundation.TypedEventHandler<Object, Object> ReadOnlyChanged;
+        event Windows.Foundation.TypedEventHandler<Object, Object> FocusFollowMouseRequested;
+
+        event Windows.Foundation.TypedEventHandler<TermControl, Windows.UI.Xaml.RoutedEventArgs> Initialized;
+        // // This is an event handler forwarder for the underlying connection.
+        // // We expose this and ConnectionState here so that it might eventually be data bound.
+        event Windows.Foundation.TypedEventHandler<Object, Object> ConnectionStateChanged;
+        // Microsoft.Terminal.TerminalConnection.ConnectionState ConnectionState { get; };
+
+
+        Boolean CopySelectionToClipboard(Boolean singleLine, Windows.Foundation.IReference<CopyFormat> formats);
+        void PasteTextFromClipboard();
+        void Close();
+        Windows.Foundation.Size CharacterDimensions { get; };
+        Windows.Foundation.Size MinimumSize { get; };
+        Single SnapDimensionToGrid(Boolean widthOrHeight, Single dimension);
+
+        void ScrollViewport(Int32 viewTop);
+        // Int32 GetScrollOffset();
+        // Int32 GetViewHeight();
+        // event ScrollPositionChangedEventArgs ScrollPositionChanged;
+
+        void CreateSearchBoxControl();
+
+        void SearchMatch(Boolean goForward);
+
+        void AdjustFontSize(Int32 fontSizeDelta);
+        void ResetFontSize();
+
+        void ToggleShaderEffects();
+        void SendInput(String input);
+
+        // void TaskbarProgressChanged();
+
+
+        Boolean ReadOnly { get; };
+        void ToggleReadOnly();
+    }
+}
