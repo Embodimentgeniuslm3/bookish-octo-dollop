@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace Microsoft.Terminal.Settings.Model
+{
+    [default_interface] runtimeclass ApplicationState {
+        static ApplicationState GetForCurrentApp();
+
+        void Reload();
+        void Reset();
+        void Commit();
+
+        Boolean CloseAllTabsWarningDismissed;
+        Boolean LargePasteWarningDismissed;
+        Boolean MultiLinePasteWarningDismissed;
+    }
+}
