@@ -1,0 +1,62 @@
+﻿<UserControl
+    x:Class="Microsoft.Terminal.TerminalControl.SearchBoxControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Microsoft.Terminal.TerminalControl"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="Root"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Top"
+    d:DesignHeight="70"
+    d:DesignWidth="200">
+
+    <StackPanel Height="70" Orientation="Vertical">
+
+        <Button x:Name="Close" Height="20" Width="20" HorizontalAlignment="Right" Padding="0" Click="_CloseClick" Background="Transparent">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="15" Foreground="White"/>
+        </Button>
+
+        <StackPanel Orientation="Horizontal" Height="25">
+
+            <AutoSuggestBox x:Name="AutosuggestBox" PlaceholderText="Search" QueryIcon="Find"
+                QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                Height="25" Width="160" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SetGoBackwardButton" Height="20" Width="20" HorizontalAlignment="Right" Click="_GoBackwardClick" Padding="1"
+                        BorderBrush="Blue" BorderThickness="0" Background="Transparent">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74A;" FontSize="15" Foreground="DimGray"/>
+                </Button>
+                <Button x:Name="SetGoForwardButton" Height="20" Width="20" Click="_GoForwardClick" Padding="1"
+                        BorderBrush="Blue" BorderThickness="0" Background="Transparent">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74B;" FontSize="15" Foreground="DimGray"/>
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Height="25" Width="200">
+            <Grid Width="60">
+            </Grid>
+            
+            <CheckBox x:Name="CaseSensitivityCheckBox"
+                      Checked="_CaseSensitivityChecked" Unchecked="_CaseSensitivityUnChecked" Height="25">
+                <CheckBox.Resources>
+                    <ResourceDictionary>
+                        <SolidColorBrush x:Key="CheckBoxColor" Color="White"/>
+                        <StaticResource x:Key="CheckBoxCheckBackgroundStrokeUnchecked" ResourceKey="CheckBoxColor" />
+                        <StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" ResourceKey="CheckBoxColor" />
+                    </ResourceDictionary>
+                </CheckBox.Resources>
+                <TextBlock Text="Case Sensitive" Foreground="White"/>
+            </CheckBox>
+
+            <Button x:Name="MoveSearchBoxPosition" Height="20" Width="20" HorizontalAlignment="Right" Click="_MovePositionClick" Padding="0"
+                            Background="Transparent">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE90E;" FontSize="15" Foreground="DimGray"/>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
