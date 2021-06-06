@@ -1,0 +1,15 @@
+
+
+namespace ScratchWinRTServer
+{
+    [default_interface] runtimeclass HostClass {
+        HostClass(Guid g);
+
+        Guid Id { get; };
+
+        void Attach(Windows.UI.Xaml.Controls.SwapChainPanel panel);
+        void BeginRendering();
+
+        void ThisIsInsane(UInt64 swapchainHandle);
+    };
+}
