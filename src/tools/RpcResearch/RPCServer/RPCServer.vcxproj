@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{c36b5299-7353-4726-8007-31551d80a09c}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RPCServer</RootNamespace>
+    <ProjectName>RPCServer</ProjectName>
+    <TargetName>RPCServer</TargetName>
+    <ConfigurationType>Application</ConfigurationType>
+    <OpenConsoleUniversalApp>false</OpenConsoleUniversalApp>
+    <ApplicationType>Windows Store</ApplicationType>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+  </PropertyGroup>
+
+  <Import Project="..\..\..\..\common.openconsole.props" Condition="'$(OpenConsoleDir)'==''" />
+  <Import Project="$(OpenConsoleDir)src\cppwinrt.build.pre.props" />
+
+  <PropertyGroup>
+    <GenerateManifest>true</GenerateManifest>
+    <EmbedManifest>true</EmbedManifest>
+  </PropertyGroup>
+
+  <!-- Source Files -->
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="IScratch.h" />
+    <ClInclude Include="ICalculatorComponent.h" />
+
+    <ClInclude Include="ScratchImpl.h" />
+    <ClInclude Include="CalculatorComponent.h" />
+    <ClInclude Include="WindowBroker.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="RPCServer.cpp" />
+    <ClCompile Include="WindowBroker.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- COM classes that should be used by external processes should be
+    included in the ProxyStub.vcxproj's Midl files, not here. -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)src\types\lib\types.vcxproj" />
+  </ItemGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\ProxyStub;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!--
+    This ItemGroup and the Globals PropertyGroup below it are required in order
+    to enable F5 debugging for the unpackaged application
+    -->
+  <ItemGroup>
+    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\debugger_general.xml" />
+    <PropertyPageSchema Include="$(VCTargetsPath)$(LangID)\debugger_local_windows.xml" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+
+  <Import Project="$(OpenConsoleDir)src\cppwinrt.build.post.props" />
+
+  <!-- These have to come after post.props because the Cpp common targets will inexplicably overwrite them. -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- <Import Project="$(OpenConsoleDir)\build\rules\GenerateSxsManifestsFromWinmds.targets" /> -->
+</Project>
