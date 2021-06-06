@@ -1,0 +1,11 @@
+
+
+namespace ScratchWinRTServer
+{
+    [default_interface] runtimeclass HostClass {
+        HostClass(Guid g);
+        void DoTheThing();
+        Int32 DoCount { get; };
+        Guid Id { get; };
+    };
+}
