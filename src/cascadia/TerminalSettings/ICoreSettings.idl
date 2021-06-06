@@ -1,0 +1,64 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace Microsoft.Terminal.Settings
+{
+    enum CursorStyle
+    {
+        Vintage,
+        Bar,
+        Underscore,
+        FilledBox,
+        EmptyBox
+    };
+
+    enum Direction
+    {
+        None = 0,
+        Left,
+        Right,
+        Up,
+        Down
+    };
+
+    enum SelectionExpansionMode
+    {
+        Cell = 0,
+        Word,
+        Line,
+        Viewport,
+        Buffer
+    };
+
+    enum SelectionEndpoint
+    {
+        End = 0,
+        Start
+    };
+
+    interface ICoreSettings
+    {
+        UInt32 DefaultForeground;
+        UInt32 DefaultBackground;
+        UInt32 GetColorTableEntry(Int32 index);
+        void SetColorTableEntry(Int32 index, UInt32 value);
+        // TODO:MSFT:20642297 - define a sentinel for Infinite Scrollback
+        Int32 HistorySize;
+        Int32 InitialRows;
+        Int32 InitialCols;
+        Int32 RowsToScroll;
+
+        Boolean SnapOnInput;
+        Boolean AltGrAliasing;
+
+        UInt32 CursorColor;
+        CursorStyle CursorShape;
+        UInt32 CursorHeight;
+        String StartingTitle;
+        Boolean SuppressApplicationTitle;
+        String WordDelimiters;
+
+        Boolean ForceVTInput;
+    };
+
+}
