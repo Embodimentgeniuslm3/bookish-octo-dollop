@@ -1,0 +1,16 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+namespace TerminalApp
+{
+    [default_interface] runtimeclass Toast
+    {
+        Toast();
+        void Show();
+        Windows.UI.Xaml.Controls.ContentControl Root();
+        // Microsoft.UI.Xaml.Controls.TeachingTip Root();
+
+        event Windows.Foundation.TypedEventHandler<Object, Object> Closed;
+
+    }
+}
