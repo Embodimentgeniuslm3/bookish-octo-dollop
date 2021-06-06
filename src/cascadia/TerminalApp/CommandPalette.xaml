@@ -1,0 +1,113 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under
+the MIT License. See LICENSE in the project root for license information. -->
+<Grid
+    x:Class="TerminalApp.CommandPalette"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TerminalApp"
+    xmlns:mux="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+    mc:Ignorable="d">
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="8*" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="9*"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- ThemeShadow is only on 18362. This "Windows10version1903" bit adds it
+    conditionally -->
+    <Grid.Resources>
+        <Windows10version1903:ThemeShadow x:Name="CommandPaletteShadow" />
+    </Grid.Resources>
+
+    <Grid
+        x:Name="ShadowBackdrop"
+        Background="Transparent"
+        Grid.Column="1"
+        Grid.Row="0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        </Grid>
+
+    <Grid
+        x:Name="Backdrop"
+        Background="{ThemeResource SystemChromeMediumLowColor}"
+        CornerRadius="{ThemeResource ControlCornerRadius}"
+        Margin="8"
+        Grid.Column="1"
+        Grid.Row="0"
+        MaxWidth="400"
+        MaxHeight="400"
+        Windows10version1903:Shadow="{StaticResource CommandPaletteShadow}"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox
+            Grid.Row="0"
+            x:Uid="CommandPalette_SearchBox"
+            x:Name="_SearchBox"
+            Margin="8"
+            TextChanged="_filterTextChanged"
+            KeyDown="_keyDownHandler"
+            Text="">
+        </TextBox>
+
+        <ListView
+            Grid.Row="1"
+            x:Name="_FilteredActionsView"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            SelectionMode="Single"
+            CanReorderItems="False"
+            AllowDrop="False"
+            ItemsSource="{x:Bind FilteredActions}">
+
+            <ItemsControl.ItemTemplate >
+                <DataTemplate x:DataType="local:Command">
+
+                    <!-- This HorizontalContentAlignment="Stretch" is important
+                    to make sure it takes the entire width of the line -->
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+
+                        <Grid HorizontalAlignment="Stretch"  >
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- TODO: Add Icon to command palette entries, in column 0 -->
+
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Left"
+                                       Text="{x:Bind Name, Mode=OneWay}" />
+
+                            <TextBlock Grid.Column="2"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Text="{x:Bind KeyChordText, Mode=OneWay}" />
+                        </Grid>
+                    </ListViewItem>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListView>
+
+    </Grid>
+
+
+</Grid>
